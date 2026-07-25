@@ -1,6 +1,7 @@
 'use client'
 import { Suspense, useState, useEffect, type FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { signIn, signUp, useSession } from '@/lib/auth-client'
 
 function SignInForm() {
@@ -129,6 +130,13 @@ function SignInForm() {
             >
               {loading ? 'Please wait…' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
             </button>
+            {mode === 'sign-in' && (
+              <div className="text-center">
+                <Link href="/forgot-password" className="font-mono text-[10px] text-ink-3 hover:text-accent transition-colors">
+                  Forgot your password?
+                </Link>
+              </div>
+            )}
           </form>
         </div>
 

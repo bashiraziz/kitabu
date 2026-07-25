@@ -12,11 +12,37 @@ if (!authSecret && process.env.NODE_ENV === 'production') {
 
 const pool = databaseUrl ? new Pool({ connectionString: databaseUrl, ssl }) : undefined
 
+async function sendResetEmail(email: string, url: string) {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    // Dev fallback — log the link so you can test without an email provider
+    console.log(`\n🔑 Password reset link for ${email}:\n${url}\n`)
+    return
+  }
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'Kitabu <noreply@kitabu.app>',
+      to: email,
+      subject: 'Reset your Kitabu password',
+      html: `<p>Click the link below to reset your password. It expires in 1 hour.</p>
+             <p><a href="${url}">${url}</a></p>
+             <p>If you didn't request this, ignore this email.</p>`,
+    }),
+  })
+}
+
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
   secret: authSecret || 'dev-insecure-secret-please-set-env',
   database: pool,
-  emailAndPassword: { enabled: true },
+  emailAndPassword: {
+    enabled: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendResetEmail(user.email, url)
+    },
+  },
   plugins: [nextCookies()],
   databaseHooks: {
     user: {

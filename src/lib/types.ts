@@ -1,5 +1,5 @@
 export type Role = 'parent' | 'librarian'
-export type Screen = 'home' | 'browse' | 'detail' | 'shelf' | 'desk' | 'loans' | 'catalogue' | 'members'
+export type Screen = 'home' | 'browse' | 'detail' | 'shelf' | 'desk' | 'loans' | 'catalogue' | 'members' | 'add-book' | 'add-member' | 'checkout'
 export type AgeBand = '6-8' | '9-12'
 export type LoanStatus = 'active' | 'soon' | 'overdue'
 export type Tier = 'family_friends' | 'wider_circle'

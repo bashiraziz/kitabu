@@ -1,9 +1,11 @@
 'use client'
 import { useStore } from '@/lib/store'
+import { useTime, greeting } from '@/lib/useTime'
 import { CATEGORY_COLORS } from '@/lib/seed'
 
 export function DeskScreen() {
   const store = useStore()
+  const now = useTime()
 
   const totalBooks = store.books.reduce((s, b) => s + b.total_copies, 0)
   const totalOut = store.loans.length
@@ -33,8 +35,8 @@ export function DeskScreen() {
         <span className="font-mono text-[10px] tracking-[.14em] uppercase text-accent">— Librarian</span>
         <span className="font-mono text-[10px] text-ink-3">Kitabu desk</span>
       </div>
-      <h1 className="text-[26px] font-normal mb-5" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }}>
-        Good afternoon, Librarian.
+      <h1 className="text-[26px] font-normal mb-5" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }} suppressHydrationWarning>
+        {now ? greeting(now.getHours()) : 'Welcome'}, Librarian.
       </h1>
 
       {/* Stats grid */}
@@ -116,7 +118,7 @@ export function DeskScreen() {
             Members
           </button>
           <button
-            onClick={() => store.goBrowse()}
+            onClick={() => store.goAddBook()}
             className="flex items-center gap-2 px-3 py-2.5 border border-accent bg-accent-soft rounded-[10px] text-[13px] font-semibold text-accent transition-colors text-left"
           >
             <svg className="w-4 h-4 flex-none" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">

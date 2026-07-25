@@ -18,7 +18,7 @@ export function MembersScreen() {
           </h1>
           <p className="font-mono text-[11px] text-ink-3 mt-0.5">{store.families.length} member families</p>
         </div>
-        <button className="flex items-center gap-1.5 bg-accent text-accent-ink font-mono text-[11px] font-semibold px-3 py-2 rounded-[10px]">
+        <button onClick={store.goAddMember} className="flex items-center gap-1.5 bg-accent text-accent-ink font-mono text-[11px] font-semibold px-3 py-2 rounded-[10px]">
           <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <line x1="7" y1="2" x2="7" y2="12" />
             <line x1="2" y1="7" x2="12" y2="7" />

@@ -1,11 +1,14 @@
 'use client'
 import { useStore } from '@/lib/store'
+import { useTime, greeting } from '@/lib/useTime'
 import { CATEGORY_COLORS } from '@/lib/seed'
 import type { Loan } from '@/lib/types'
 
 export function HomeScreen() {
   const store = useStore()
-  const familyLoans = store.loans.filter(l => l.family_name === 'Nsubuga')
+  const now = useTime()
+  const myChildIds = new Set(store.children.map(c => c.id))
+  const familyLoans = store.loans.filter(l => myChildIds.has(l.child_id))
   const dueSoon = familyLoans.filter(l => l.status === 'soon' || l.status === 'overdue')
   const recommended = store.books.slice(0, 5)
   const categories = Object.entries(CATEGORY_COLORS).map(([name, color]) => ({
@@ -25,10 +28,10 @@ export function HomeScreen() {
       {/* Greeting */}
       <div className="flex items-baseline justify-between mb-1">
         <span className="font-mono text-[10px] tracking-[.14em] uppercase text-accent">— Karibu</span>
-        <span className="font-mono text-[10px] text-ink-3">Nsubuga family</span>
+        <span className="font-mono text-[10px] text-ink-3">{store.userName}</span>
       </div>
-      <h1 className="text-[30px] leading-[1.1] mb-[14px] font-normal" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }}>
-        Good afternoon, <em>Sarah.</em>
+      <h1 className="text-[30px] leading-[1.1] mb-[14px] font-normal" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }} suppressHydrationWarning>
+        {now ? greeting(now.getHours()) : 'Welcome'}, <em>{store.userName.split(' ')[0]}.</em>
       </h1>
 
       {/* Child chips */}

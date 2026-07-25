@@ -18,9 +18,21 @@ export function LoansScreen() {
 
   return (
     <div className="p-5 pb-7">
-      <h1 className="text-[26px] font-normal mb-1" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }}>
-        Active loans
-      </h1>
+      <div className="flex items-start justify-between mb-1">
+        <h1 className="text-[26px] font-normal" style={{ fontFamily: 'var(--font-serif-var), Georgia, serif' }}>
+          Active loans
+        </h1>
+        <button
+          onClick={store.goCheckout}
+          className="flex items-center gap-1.5 bg-accent text-accent-ink font-mono text-[11px] font-semibold px-3 py-2 rounded-[10px] flex-none mt-1"
+        >
+          <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="7" y1="2" x2="7" y2="12" />
+            <line x1="2" y1="7" x2="12" y2="7" />
+          </svg>
+          New loan
+        </button>
+      </div>
       <p className="font-mono text-[11px] text-ink-3 mb-5">
         {store.loans.length} books out ·{' '}
         {overdue.length > 0 && (

@@ -1,5 +1,8 @@
 'use client'
 import { useStore } from '@/lib/store'
+import { useTime, formatTime } from '@/lib/useTime'
+import { signOut } from '@/lib/auth-client'
+import { useRouter } from 'next/navigation'
 import { HomeScreen } from './HomeScreen'
 import { BrowseScreen } from './BrowseScreen'
 import { DetailScreen } from './DetailScreen'
@@ -8,6 +11,9 @@ import { DeskScreen } from './DeskScreen'
 import { LoansScreen } from './LoansScreen'
 import { CatalogueScreen } from './CatalogueScreen'
 import { MembersScreen } from './MembersScreen'
+import { AddBookScreen } from './AddBookScreen'
+import { AddMemberScreen } from './AddMemberScreen'
+import { CheckoutScreen } from './CheckoutScreen'
 
 const homeIcon = (
   <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -89,6 +95,15 @@ function TabBtn({
 
 export function AppShell() {
   const store = useStore()
+  const now = useTime()
+  const router = useRouter()
+
+  const firstName = store.userName.split(' ')[0]
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/sign-in')
+  }
 
   function renderScreen() {
     if (store.role === 'parent') {
@@ -105,6 +120,9 @@ export function AppShell() {
         case 'loans': return <LoansScreen />
         case 'catalogue': return <CatalogueScreen />
         case 'members': return <MembersScreen />
+        case 'add-book': return <AddBookScreen />
+        case 'add-member': return <AddMemberScreen />
+        case 'checkout': return <CheckoutScreen />
         default: return <DeskScreen />
       }
     }
@@ -121,9 +139,9 @@ export function AppShell() {
       >
         {/* Status bar */}
         <div className="flex items-center justify-between px-[26px] py-[10px] font-mono text-[12px] text-ink-2 flex-none">
-          <span>9:41</span>
-          <span className="tracking-[.1em]">KAMPALA · 24°</span>
-          <span>▮▮▮ 100%</span>
+          <span suppressHydrationWarning>{now ? formatTime(now) : '—:—'}</span>
+          <span className="tracking-[.1em]">KAMPALA</span>
+          <span suppressHydrationWarning>{now ? now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''}</span>
         </div>
 
         {/* Header */}
@@ -140,18 +158,13 @@ export function AppShell() {
               <span className="font-mono text-[9px] tracking-[.14em] uppercase text-ink-3">Kampala kids&apos; library</span>
             </div>
           </div>
-          <div className="flex bg-paper-2 border border-hair rounded-[9999px] p-[3px]">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] text-ink-3">{firstName}</span>
             <button
-              onClick={() => store.setRole('parent')}
-              className={`font-mono text-[11px] px-3 py-1.5 rounded-[9999px] transition-all duration-150 ${store.role === 'parent' ? 'bg-surface text-ink font-semibold shadow-sm' : 'text-ink-3'}`}
+              onClick={handleSignOut}
+              className="font-mono text-[10px] text-ink-3 border border-hair px-2.5 py-1 rounded-[9999px] hover:border-accent hover:text-accent transition-colors"
             >
-              Parent
-            </button>
-            <button
-              onClick={() => store.setRole('librarian')}
-              className={`font-mono text-[11px] px-3 py-1.5 rounded-[9999px] transition-all duration-150 ${store.role === 'librarian' ? 'bg-surface text-ink font-semibold shadow-sm' : 'text-ink-3'}`}
-            >
-              Librarian
+              Sign out
             </button>
           </div>
         </header>

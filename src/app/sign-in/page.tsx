@@ -1,12 +1,15 @@
 'use client'
-import { useState, useEffect, type FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState, useEffect, type FormEvent } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn, signUp, useSession } from '@/lib/auth-client'
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter()
+  const params = useSearchParams()
   const { data: session } = useSession()
-  const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in')
+  const [mode, setMode] = useState<'sign-in' | 'sign-up'>(
+    params.get('mode') === 'signup' ? 'sign-up' : 'sign-in'
+  )
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -134,5 +137,13 @@ export default function SignInPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
   )
 }

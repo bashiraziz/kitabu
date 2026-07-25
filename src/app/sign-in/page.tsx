@@ -20,7 +20,8 @@ function SignInForm() {
     if (!isPending && session?.user) router.replace('/app')
   }, [isPending, session?.user, router])
 
-  if (isPending || session?.user) return null
+  if (isPending) return <div className="min-h-screen bg-paper-2" />
+  if (session?.user) return null
 
   const field = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm(f => ({ ...f, [key]: e.target.value }))

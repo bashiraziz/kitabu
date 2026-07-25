@@ -6,8 +6,8 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/app')) {
     // Lightweight cookie check — full validation happens in the server component
     const sessionCookie =
-      request.cookies.get('better-auth.session_token') ??
-      request.cookies.get('__Secure-better-auth.session_token')
+      request.cookies.get('kitabu.session_token') ??
+      request.cookies.get('__Secure-kitabu.session_token')
 
     if (!sessionCookie) {
       return NextResponse.redirect(new URL('/sign-in', request.url))

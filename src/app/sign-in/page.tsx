@@ -7,7 +7,7 @@ import { signIn, signUp, useSession } from '@/lib/auth-client'
 function SignInForm() {
   const router = useRouter()
   const params = useSearchParams()
-  const { data: session } = useSession()
+  const { data: session, isPending } = useSession()
   const [mode, setMode] = useState<'sign-in' | 'sign-up'>(
     params.get('mode') === 'signup' ? 'sign-up' : 'sign-in'
   )
@@ -15,9 +15,12 @@ function SignInForm() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  // Redirect immediately if already signed in — don't show the form at all
   useEffect(() => {
-    if (session?.user) router.push('/app')
-  }, [session?.user, router])
+    if (!isPending && session?.user) router.replace('/app')
+  }, [isPending, session?.user, router])
+
+  if (isPending || session?.user) return null
 
   const field = (key: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm(f => ({ ...f, [key]: e.target.value }))

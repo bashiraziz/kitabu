@@ -1,9 +1,12 @@
 import Link from 'next/link'
-import { BOOKS } from '@/lib/seed'
+import { getBooks } from '@/db/queries'
 
-export default function LandingPage() {
-  const shelfBooks = BOOKS.slice(0, 8)
-  const heroBooks = [BOOKS[0], BOOKS[1], BOOKS[9]]
+export const revalidate = 3600
+
+export default async function LandingPage() {
+  const books = await getBooks()
+  const shelfBooks = books.slice(0, 8)
+  const heroBooks = [books[0], books[1], books[9]].filter(Boolean)
 
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
@@ -68,7 +71,7 @@ export default function LandingPage() {
               </a>
             </div>
             <div className="flex gap-8 flex-wrap">
-              <HeroStat value="20" label="Titles" />
+              <HeroStat value={String(books.length)} label="Titles" />
               <HeroStat value="6–12" label="Ages" />
               <HeroStat value="3" label="Pickup points" />
             </div>
@@ -196,7 +199,7 @@ export default function LandingPage() {
       <section className="border-b border-hair" style={{ background: '#0F1A2E' }}>
         <div className="max-w-5xl mx-auto px-[clamp(20px,5vw,56px)] py-14">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatBand value="20+" label="Books" />
+            <StatBand value={`${books.length}+`} label="Books" />
             <StatBand value="6" label="Founding families" />
             <StatBand value="1" label="Partner school (KPS)" />
             <StatBand value="UGX 0" label="Fully cashless" />

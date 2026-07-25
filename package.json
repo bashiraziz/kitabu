@@ -10,7 +10,8 @@
     "db:studio": "dotenv -e .env.local -- drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:seed": "dotenv -e .env.local -- tsx src/db/seed-db.ts",
-    "db:migrate-auth": "dotenv -e .env.local -- tsx src/db/migrate-auth.ts"
+    "db:migrate-auth": "dotenv -e .env.local -- tsx src/db/migrate-auth.ts",
+    "db:set-librarian": "dotenv -e .env.local -- tsx src/db/set-librarian.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

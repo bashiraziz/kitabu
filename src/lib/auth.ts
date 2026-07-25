@@ -37,6 +37,20 @@ export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
   secret: authSecret || 'dev-insecure-secret-please-set-env',
   database: pool,
+  session: {
+    cookieCache: {
+      enabled: false,
+    },
+  },
+  advanced: {
+    cookiePrefix: 'kitabu',
+    defaultCookieAttributes: {
+      // No maxAge = session cookie: cleared when the browser is closed
+      sameSite: 'lax',
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    },
+  },
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }) => {

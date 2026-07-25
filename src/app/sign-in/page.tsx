@@ -31,7 +31,7 @@ function SignInForm() {
     setLoading(true)
     try {
       if (mode === 'sign-in') {
-        const { error: err } = await signIn.email({ email: form.email, password: form.password, rememberMe: true })
+        const { error: err } = await signIn.email({ email: form.email, password: form.password, rememberMe: false })
         if (err) { setError(err.message ?? 'Sign-in failed'); return }
       } else {
         if (form.password.length < 8) { setError('Password must be at least 8 characters'); return }

@@ -38,6 +38,7 @@ function SignInForm() {
         const { error: err } = await signUp.email({ name: form.name, email: form.email, password: form.password })
         if (err) { setError(err.message ?? 'Sign-up failed'); return }
       }
+      sessionStorage.setItem('kitabu-tab', '1')
       router.push('/app')
       router.refresh()
     } catch (err) {

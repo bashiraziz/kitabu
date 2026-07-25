@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import { useStore } from '@/lib/store'
 import { useTime, formatTime } from '@/lib/useTime'
 import { signOut } from '@/lib/auth-client'
@@ -100,7 +101,17 @@ export function AppShell() {
 
   const firstName = store.userName.split(' ')[0]
 
+  // Tab-close session guard: sessionStorage is cleared when the tab closes.
+  // If the flag is missing on mount, the user reopened a closed tab — sign them out.
+  useEffect(() => {
+    if (!sessionStorage.getItem('kitabu-tab')) {
+      signOut().then(() => router.replace('/sign-in'))
+      return
+    }
+  }, [router])
+
   const handleSignOut = async () => {
+    sessionStorage.removeItem('kitabu-tab')
     await signOut()
     router.push('/sign-in')
   }

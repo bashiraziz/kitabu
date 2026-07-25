@@ -34,7 +34,7 @@ export default async function LandingPage() {
           </nav>
 
           <Link
-            href="/app"
+            href="/sign-in"
             className="bg-accent text-accent-ink font-mono text-[12px] font-semibold px-4 py-2 rounded-[10px] hover:bg-accent-strong transition-colors flex-none"
           >
             Request an invite
@@ -58,7 +58,7 @@ export default async function LandingPage() {
             </p>
             <div className="flex flex-wrap gap-3 mb-10">
               <Link
-                href="/app"
+                href="/sign-in"
                 className="bg-accent text-accent-ink font-semibold text-[14px] px-6 py-3 rounded-[10px] hover:bg-accent-strong transition-colors"
               >
                 Request an invite
@@ -272,13 +272,13 @@ export default async function LandingPage() {
           </div>
           <div className="flex gap-3 flex-wrap">
             <Link
-              href="/app"
+              href="/sign-in"
               className="border border-accent text-accent font-mono text-[12px] font-semibold px-5 py-2.5 rounded-[10px] hover:bg-accent-soft transition-colors"
             >
               Donate a book
             </Link>
             <Link
-              href="/app"
+              href="/sign-in"
               className="border border-hair text-ink font-mono text-[12px] px-5 py-2.5 rounded-[10px] hover:border-ink-2 transition-colors"
             >
               Gift a shelf
@@ -302,7 +302,7 @@ export default async function LandingPage() {
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link
-              href="/app"
+              href="/sign-in"
               className="bg-accent text-accent-ink font-semibold text-[15px] px-8 py-3.5 rounded-[10px] hover:bg-accent-strong transition-colors"
             >
               Request an invite

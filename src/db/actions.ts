@@ -1,6 +1,6 @@
 'use server'
 
-import { db } from './index'
+import { db, sql } from './index'
 import { books, children, loans, copies, members } from './schema'
 import { eq, and } from 'drizzle-orm'
 import { loanStatus, formatDue } from './queries'
@@ -113,6 +113,13 @@ export async function addMember(params: {
     loan_count: 0,
     tier: newMember.tier,
   }
+}
+
+export async function claimFamily(userId: string, memberId: number): Promise<void> {
+  await sql`
+    UPDATE user_profiles SET member_id = ${memberId}
+    WHERE id = ${userId} AND member_id IS NULL
+  `
 }
 
 export async function returnBook(loanId: number): Promise<void> {

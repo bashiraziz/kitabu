@@ -28,6 +28,8 @@ export default async function AppPage() {
     // profile row not yet created — default to parent
   }
 
+  if (role === 'parent' && memberId === null) redirect('/app/setup')
+
   const books = await getBooks()
   const children = memberId ? await getChildren(memberId) : []
   const allChildren = await getAllChildren()

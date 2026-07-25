@@ -28,7 +28,7 @@ export default async function LandingPage() {
 
           <nav className="hidden md:flex items-center gap-6 font-mono text-[12px] text-ink-2">
             <a href="#how-it-works" className="hover:text-ink transition-colors">How it works</a>
-            <a href="#shelf" className="hover:text-ink transition-colors">The shelf</a>
+            <Link href="/browse" className="hover:text-ink transition-colors">Browse books</Link>
             <a href="#join" className="hover:text-ink transition-colors">Join</a>
             <a href="#give" className="hover:text-ink transition-colors">Give a book</a>
           </nav>
@@ -71,12 +71,12 @@ export default async function LandingPage() {
               >
                 Request an invite
               </Link>
-              <a
-                href="#shelf"
+              <Link
+                href="/browse"
                 className="border border-hair text-ink font-semibold text-[14px] px-6 py-3 rounded-[10px] hover:border-ink-2 transition-colors"
               >
-                See the shelf
-              </a>
+                Browse the shelf
+              </Link>
             </div>
             <div className="flex gap-8 flex-wrap">
               <HeroStat value={String(books.length)} label="Titles" />

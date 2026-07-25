@@ -33,12 +33,20 @@ export default async function LandingPage() {
             <a href="#give" className="hover:text-ink transition-colors">Give a book</a>
           </nav>
 
-          <Link
-            href="/sign-in?mode=signup"
-            className="bg-accent text-accent-ink font-mono text-[12px] font-semibold px-4 py-2 rounded-[10px] hover:bg-accent-strong transition-colors flex-none"
-          >
-            Request an invite
-          </Link>
+          <div className="flex items-center gap-2 flex-none">
+            <Link
+              href="/sign-in"
+              className="font-mono text-[12px] text-ink-2 px-3 py-2 hover:text-accent transition-colors"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/sign-in?mode=signup"
+              className="bg-accent text-accent-ink font-mono text-[12px] font-semibold px-4 py-2 rounded-[10px] hover:bg-accent-strong transition-colors"
+            >
+              Request an invite
+            </Link>
+          </div>
         </div>
       </header>
 
